@@ -1,0 +1,65 @@
+<header
+  class="
+    w-full
+    bg-gray-200
+    p-3
+    px-5
+    flex
+    justify-between
+    items-center
+    shadow-inner
+  "
+>
+  <section class="flex items-center">
+    <a
+      href="<%= routes.home %>"
+      class="
+        font-semibold
+        text-4xl
+        mr-5
+        hover:text-blue-500
+        transition-all
+        p-1
+        px-3
+        rounded-2xl
+        shadow-inner
+        text-gray-600
+        border border-gray-300
+      "
+      >2021-OOS</a
+    >
+    <a
+      class="hover:text-blue-500 transition-all border-l pl-3 border-gray-400"
+      href="<%= routes.community %>"
+      >커뮤니티</a
+    >
+  </section>
+  <% if (user) { %>
+  <h1>반갑습니다 <%= user.email %></h1>
+  <a
+    class="
+      hover:text-red-500
+      text-black
+      transition-all
+      font-medium
+      border-l border-gray-400
+      pl-5
+    "
+    href="<%= routes.logout %>"
+    >로그아웃</a
+  >
+  <% } else { %>
+  <a
+    class="
+      hover:text-red-500
+      text-black
+      transition-all
+      font-medium
+      pl-5
+      border-l border-gray-400
+    "
+    href="<%= routes.auth %>"
+    >로그인</a
+  >
+  <% } %>
+</header>
