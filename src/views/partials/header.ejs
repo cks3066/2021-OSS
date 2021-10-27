@@ -1,13 +1,14 @@
 <header
   class="
     w-full
-    bg-gray-200
+    bg-gray-100
     p-3
     px-5
     flex
     justify-between
     items-center
     shadow-inner
+    border-b border-gray-300
   "
 >
   <section class="flex items-center">
@@ -29,37 +30,57 @@
       >2021-OOS</a
     >
     <a
-      class="hover:text-blue-500 transition-all border-l pl-3 border-gray-400"
+      class="
+        hover:text-blue-500
+        transition-all
+        border-l
+        px-3
+        border-gray-400
+        font-medium
+      "
       href="<%= routes.community %>"
       >커뮤니티</a
     >
+    <a
+      class="
+        hover:text-blue-500
+        transition-all
+        border-l
+        pl-3
+        border-gray-400
+        font-medium
+      "
+      href="<%= routes.createCommunityPost %>"
+      >Create New Community Post</a
+    >
   </section>
-  <% if (user) { %>
-  <h1>반갑습니다 <%= user.email %></h1>
-  <a
-    class="
-      hover:text-red-500
-      text-black
-      transition-all
-      font-medium
-      border-l border-gray-400
-      pl-5
-    "
-    href="<%= routes.logout %>"
-    >로그아웃</a
-  >
-  <% } else { %>
-  <a
-    class="
-      hover:text-red-500
-      text-black
-      transition-all
-      font-medium
-      pl-5
-      border-l border-gray-400
-    "
-    href="<%= routes.auth %>"
-    >로그인</a
-  >
-  <% } %>
+  <div>
+    <span id="menuBarProfileButton" class="font-medium pr-3"></span>
+    <a
+      class="
+        hover:text-red-500
+        text-black
+        transition-all
+        font-medium
+        border-l border-gray-400
+        pl-5
+      "
+      id="menuBarLogout"
+      href="<%= routes.logout %>"
+      >로그아웃</a
+    >
+    <a
+      class="
+        hover:text-red-500
+        text-black
+        transition-all
+        font-medium
+        pl-5
+        border-l border-gray-400
+      "
+      id="menuBarSignIn"
+      href="<%= routes.auth %>"
+      >로그인</a
+    >
+  </div>
 </header>

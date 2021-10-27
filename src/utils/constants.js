@@ -5,5 +5,12 @@ export const routes = {
   signIn: "/signIn",
   logout: "/logout",
   community: "/community",
-  test: "/test",
+  createCommunityPost: "/community/create",
+  communityPostDetail: (postId) =>
+    postId ? `/community/${postId}` : `/community/:postId`,
+};
+
+export const DB_COLLECTIONS = {
+  USER: "user",
+  COMMUNITY_POST: "communityPost",
 };
