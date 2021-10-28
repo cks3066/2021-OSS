@@ -4,7 +4,7 @@ import {
   communityPostDetail,
   createCommunityPost,
 } from "../controller/communityController";
-import { auth, home } from "../controller/homeController";
+import { auth, home, somethingNew } from "../controller/homeController";
 import { routes } from "../utils/constants";
 
 export const mainRouter = express.Router();

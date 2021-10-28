@@ -37,6 +37,30 @@ export const getUser = async () => {
   return user;
 };
 
+export const getUserByUid = async (uid) => {
+  if (!uid || uid === "") {
+    return null;
+  }
+  try {
+    const q = query(
+      collection(dbService, DB_COLLECTIONS.USER),
+      where("uid", "==", uid)
+    );
+    const queryResult = await getDocs(q);
+
+    for (const docRef of queryResult.docs) {
+      if (docRef.exists()) {
+        return docRef.data();
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 //해당 communityPost가 현재 로그인 한 유저의 것인지 파악하는 함수
 export const isPostMine = (user, postId) => {
   const userPosts = user["postIds"];
@@ -171,7 +195,7 @@ export const createCommunityPost = async (data) => {
 //communityPost를 업데이트 해주는 함수
 export const updateCommunityPost = async (postId, data) => {
   try {
-    const { title, postBody, imgUrls, tags } = data;
+    const { title, postBody, imgUrlList, tags } = data;
     const user = await getUser();
 
     if (!Boolean(postId)) {
@@ -202,7 +226,7 @@ export const updateCommunityPost = async (postId, data) => {
     const updateData = {
       ...(title && { title }),
       ...(postBody && { postBody }),
-      ...(imgUrls && { imgUrls }),
+      ...(imgUrlList && { imgUrlList }),
       ...(tags && { tags }),
     };
 
