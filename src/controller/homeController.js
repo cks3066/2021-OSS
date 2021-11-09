@@ -18,6 +18,9 @@ export const auth = async (req, res) => {
   res.render("auth", { routes, pageTitle: "Auth | OOS" });
 };
 
+export const profile = (req, res) => {
+  res.render("profile", { routes, pageTitle: "Profile | OOS"});
+}
 // //로그인을 시도하려 하면 동작하는 함수
 // export const login = async (req, res) => {
 //   const { email, password } = req.body;

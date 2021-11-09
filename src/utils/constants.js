@@ -6,6 +6,7 @@ export const routes = {
   logout: "/logout",
   community: "/community",
   createCommunityPost: "/community/create",
+  profile: "/profile",
   communityPostDetail: (postId) =>
     postId ? `/community/${postId}` : `/community/:postId`,
 };

@@ -20,3 +20,5 @@ mainRouter.get(routes.community, community);
 mainRouter.get(routes.createCommunityPost, createCommunityPost);
 //communityPost
 mainRouter.get(routes.communityPostDetail(), communityPostDetail);
+//profile
+mainRouter.get(routes.profile, profile);

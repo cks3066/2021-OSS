@@ -6,6 +6,7 @@ module.exports = {
     communityPostDetail: "./src/client/js/communityPostDetail.js",
     community: "./src/client/js/community.js",
     createCommunityPost: "./src/client/js/createCommunityPost.js",
+    profile: "./src/client/js/profile.js",
   },
   watch: true,
   mode: "development",
