@@ -3,21 +3,37 @@
   <%-include('./partials/head.ejs') %>
   <body>
     <%-include('./partials/header.ejs') %>
-    <main class="w-full min-h-screen flex justify-center items-center pb-20">
+    <main class="w-full min-h-screen pt-14 pb-20 text-center">
+<!--   로그인 한 상태에서만 접근 가능
+      현재 접속한 uid와 접근한 user의 id를 비교
+      같다면 닉네임 수정 기능 추가
+      아니면 없음
+      기본적으로 구현 할 기능 {사진,  닉네임, 이메일(default -> email)}
+                            {게시물 수 -> 클릭시 확인 게시물(5개 씩) 앞, 뒤 이동 }
+                            {내 댓글 보기(5개 씩 앞, 뒤 이동) , 프로필 수정 가능 사항들} -->
       <div
         class="
-          p-10
+          p-7
           max-w-xl
           bg-gray-200
           w-full
+          h-52
           mx-auto
           rounded-2xl
           shadow-inner
           text-center
+          flex
         "
       >
-        <h1 class="font-medium pb-10 text-2xl">profile</h1>
-        <div id="postsContainer" class="grid grid-cols-2 gap-5"></div>
+      <div id = "profileImage" class = " bg-black rounded-full" style="width: 152px; height: 100%"></div>
+      <div id = "userInfo" class = "bg-white h-full p-5 grid leading-loose" style="width: 70%;">
+        <div id = "userName" class = "flex justify-center items-center">닉네임</div>
+        <div id = "userEmail" class = "flex justify-center items-center">이메일</div>
+      </div>
+      </div>
+      <div class = "max-w-xl w-full h-11 p-3 mx-auto border-b border-blue-200">게 시 물</div>
+      <div id = "userPost" class = "bg-red-600 max-w-xl w-full h-96 mx-auto">
+
       </div>
     </main>
     <script src="/assets/js/profile.js"></script>

@@ -5,6 +5,7 @@ import { updateMenuBar } from "./menuBar";
 
 const init = async () => {
   document.body.hidden = false;
+
   updateMenuBar();
 };
 
