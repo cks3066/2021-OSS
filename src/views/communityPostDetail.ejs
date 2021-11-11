@@ -4,9 +4,51 @@
   <body>
     <%-include('./partials/header.ejs') %>
     <main>
-      <div id="container">
-        <div id="postContainer"></div>
-        <button id="deleteButton">delete this post</button>
+      <div>
+        <div id="buttonContainer">
+          <button id="newPostButton">새 글 작성</button>
+        </div>
+        <div id="container">
+          <div id="postTitle"></div>
+          <hr />
+          <div id="postInfo">
+            <div id="postUserID"></div>
+            <div id="postDate">2021년 11월 4일</div>
+          </div>
+          <hr />
+          <div id="postButtonContainer">
+            <div id="deleteButton">삭제하기</div>
+          </div>
+          <div id="postBody"></div>
+          <div id="commentContainer">
+            <div id="commentCnt">0개의 댓글</div>
+            <textarea
+              id="commentInput"
+              placeholder="댓글을 작성하세요"
+            ></textarea>
+            <div id="commentButtonContainer">
+              <button id="commentButton">댓글 작성</button>
+            </div>
+            <div id="commentList">
+              <div class="comment">
+                <p class="commentId">아이디</p>
+                <p class="commentContent">잘 보고 갑니다</p>
+              </div>
+              <hr />
+              <div id="commentList">
+                <div class="comment">
+                  <p class="commentId">아이디</p>
+                  <p class="commentContent">잘 보고 갑니다</p>
+                </div>
+                <hr />            <div id="commentList">
+                  <div class="comment">
+                    <p class="commentId">아이디</p>
+                    <p class="commentContent">잘 보고 갑니다</p>
+                  </div>
+                  <hr />
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <script src="/assets/js/communityPostDetail.js"></script>
