@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('./partials/head.ejs') %>
+  <body>
+    <%-include('./partials/header.ejs') %>
+    <main
+      class="
+        w-full
+        max-w-xl
+        min-h-screen
+        mx-auto
+        pb-20
+        flex
+        justify-center
+        items-center
+        flex-col
+      "
+    >
+      <input
+        id="postTitle"
+        type="text"
+        placeholder="제목..."
+        class="
+          outline-none
+          border border-gray-500
+          w-full
+          p-5
+          text-2xl
+          font-medium
+        "
+      />
+      <div id="editor-container" class="w-full">
+        <div class="editor"></div>
+        <div
+          class="
+            border-l border-b border-r border-gray-300
+            flex
+            justify-end
+            items-center
+          "
+        >
+          <button
+            id="homeCancelPostButton"
+            class="
+              p-3
+              px-10
+              bg-red-500
+              text-white
+              hover:opacity-60
+              transition-all
+            "
+          >
+            취소
+          </button>
+          <button
+            id="homeCreatePostButton"
+            class="
+              p-3
+              px-10
+              bg-green-500
+              text-white
+              hover:opacity-60
+              transition-all
+            "
+          >
+            제출
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="/assets/js/createCommunityPost.js"></script>
+  </body>
+</html>
