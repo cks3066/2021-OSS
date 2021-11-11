@@ -13,4 +13,5 @@ export const routes = {
 export const DB_COLLECTIONS = {
   USER: "user",
   COMMUNITY_POST: "communityPost",
+  COMMUNITY_COMMENT: "communityComment",
 };
