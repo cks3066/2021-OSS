@@ -12,21 +12,9 @@ import {
 import { authService } from "./firebase";
 
 const init = async () => {
-  // if (!isLoggedIn()) {
-  //   alert("해당 페이지는 로그인 후에 이용할 수 있습니다.");
-  //   window.location.href = routes.auth;
-  // }
-  try {
-    document.body.hidden = false;
+  document.body.hidden = false;
 
-    updateMenuBar();
-
-    const editorObj = createEditor(".editor");
-    homeCancelPostButton.onclick = () => handleClickToCancelPost(editorObj);
-    homeCreatePostButton.onclick = () => handleClickToCreatePost(editorObj);
-  } catch (error) {
-    console.log(error);
-  }
+  updateMenuBar();
 };
 
 const preload = () => {
