@@ -13,12 +13,16 @@ const init = async () => {
   const currentUser = await getUser();
   const link = document.getElementById('profileLink')
   const a = document.createElement("a");
-  a.innerText = "프로필";
+  a.innerText = "My프로필";
   link.appendChild(a);
+  
   if(currentUser){
     a.href = `/profile/${currentUser.uid}`;  
   }
-  a.href = `/profile/:uid`;
+  else{
+    a.href = `/auth`;
+  }
+
   a.className =
     "hover:text-white hover:bg-black transition ease-linear rounded-3xl border border-black text-xl inline-block w-full h-full";
 
