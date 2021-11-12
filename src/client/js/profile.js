@@ -8,6 +8,7 @@ import {
   deleteImgFromFirebase,
   getUser,
   isLoggedIn,
+  updateUser,
 } from "./utils";
 import { authService } from "./firebase";
 
