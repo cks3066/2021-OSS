@@ -15,7 +15,10 @@ const init = async () => {
   const a = document.createElement("a");
   a.innerText = "프로필";
   link.appendChild(a);
-  a.href = `/profile/${currentUser.uid}`;
+  if(currentUser){
+    a.href = `/profile/${currentUser.uid}`;  
+  }
+  a.href = `/profile/:uid`;
   a.className =
     "hover:text-white hover:bg-black transition ease-linear rounded-3xl border border-black text-xl inline-block w-full h-full";
 
