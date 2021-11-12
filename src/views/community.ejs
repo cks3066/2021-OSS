@@ -7,7 +7,6 @@
       <div
         class="
           p-10
-          max-w-xl
           bg-gray-200
           w-full
           mx-auto
@@ -17,7 +16,13 @@
         "
       >
         <h1 class="font-medium pb-10 text-2xl">테스트용 커뮤니티 게시판</h1>
-        <div id="postsContainer" class="grid grid-cols-2 gap-5"></div>
+        <div id="postsContainer" class="grid" style="
+        grid-auto-rows:minmax(350px,450px);
+        grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
+        
+        row-gap:2vw;
+        column-gap:2vw;
+        "></div>
       </div>
     </main>
     <script src="/assets/js/community.js"></script>
