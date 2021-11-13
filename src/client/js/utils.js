@@ -16,14 +16,16 @@ import {
   storageService,
   updateDocument,
 } from "./firebase";
-import { ref, deleteObject } from "firebase/storage";
-import { v4 as uuid } from "uuid";
 import {
-  reauthenticateWithCredential,
-  updatePassword,
-  updateProfile,
-} from "@firebase/auth";
-import { comment } from "postcss";
+  ref,
+  deleteObject,
+  getDownloadURL,
+  uploadString,
+} from "firebase/storage";
+import { v4 as uuid } from "uuid";
+
+import { updatePassword, updateProfile } from "@firebase/auth";
+
 
 //현재 로그인 한 유저정보를 불러오는 함수.
 export const getUser = async () => {
@@ -661,4 +663,36 @@ export const getComment = async (commentId) => {
   } catch (error) {
     return { ok: false, error };
   }
+};
+
+export const uploadImg = (file) => {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      reject("No file exists");
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      console.log("loaded img");
+      try {
+        const user = await getUser();
+
+        if (!user) {
+          reject("Log In first");
+        }
+
+        const imgRef = ref(storageService, `${user.uid || uuid()}/${uuid()}`);
+        await uploadString(imgRef, reader.result, "data_url");
+
+        const downloadURL = await getDownloadURL(imgRef);
+
+        resolve(downloadURL);
+      } catch (error) {
+        reject(error);
+      }
+    };
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+  });
 };

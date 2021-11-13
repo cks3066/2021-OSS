@@ -22,6 +22,7 @@ export const createEditor = (containerSelector) => {
           ok: false,
           error: "해당 기능은 로그인 한 후에 이용할 수 있습니다.",
         });
+        return;
       }
 
       const imgRef = ref(storageService, `${user.uid || uuid()}/${uuid()}`);
