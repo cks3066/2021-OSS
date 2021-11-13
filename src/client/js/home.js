@@ -9,6 +9,13 @@ import { getUser } from './utils';
 const init = async () => {
   document.body.hidden = false;
 
+  setProfileLink();
+
+  updateMenuBar();
+};
+
+const setProfileLink = async () => {
+  
   //현재 로그인 유저 프로필 주소
   const currentUser = await getUser();
   const link = document.getElementById('profileLink')
@@ -25,9 +32,7 @@ const init = async () => {
 
   a.className =
     "hover:text-white hover:bg-black transition ease-linear rounded-3xl border border-black text-xl inline-block w-full h-full";
-
-  updateMenuBar();
-};
+}
 
 const preload = () => {
   document.body.hidden = true;
