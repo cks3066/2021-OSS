@@ -1,21 +1,34 @@
 .btn {
-    background:#f77676;
-    color:#fff;
-    border:none;
+    /*background:#f77676;
+    color:#fff;*/
+    /*background-color: #fff;*/
+
+    --tw-bg-opacity: 1;
+    background-color: rgba(249, 250, 251, var(--tw-bg-opacity));
+
+    color: #f77676;
     position:relative;
+    /*border-bottom-color: #f77676;*/
     height:60px;
     font-size:1.6em;
     padding:0 2em;
     cursor:pointer;
     transition:800ms ease all;
-    outline:none;
+    border: solid;
+    border-right: hidden;
+    border-left: hidden;
+    border-top: hidden;
+    border-bottom-width: thin;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
 .btn:hover{
-    background-color: #fff;
-    color: #f77676;
+    /*background-color: #fff;
+    color: #f77676;*/
+    background:#f77676;
+    color:#fff;
+    
 }
 
 button:before,button:after{
@@ -26,6 +39,7 @@ button:before,button:after{
     height:2px;
     width:0;
     background: #f77676;
+    /*background-color: #fff;*/
     transition:400ms ease all;
   }
   button:after{

@@ -5,6 +5,7 @@ import { updateMenuBar } from "./menuBar";
 import { getCommunityPosts } from "./utils";
 
 const postsContainer = document.getElementById("postsContainer");
+const buttonForSort = document.getElementsByClassName("button");
 const viewedButton= document.getElementById("viewed");
 const recentButton= document.getElementById("recent");
 //viewedButton.addEventListener("click",handleClickToViewedButton);
@@ -81,15 +82,32 @@ const deleteTag = (postBody) =>{
   return eraseTag;
 }
 
+function convertToDate(createdAt) {
+  const now = new Date();
+  const d =new Date(createdAt);
+  const diffTime=(now.getTime()-d.getTime())/(1000*60*60);
+  if(Math.floor(diffTime)<1){
+    return Math.floor(diffTime*60)+"분 전";
+  }
+  else if(Math.floor(diffTime)>=24){
+    return (d.toLocaleDateString()).slice(0,-1);
+  }
+  else{
+    return Math.floor(diffTime)+"시간 전";
+  }  
+}
+
 const createPostUI = (post) => {
-  const { id,title,postBody } = post;
+  const { id,title,postBody,createdAt, createrId } = post;
   
   
   const post_div=document.createElement("div");
   const post_body_div=document.createElement("div");
   const post_body_a = document.createElement("a");
+  const title_div_a = document.createElement("a");
   const title_div = document.createElement("div");
-  const info_div = document.createElement("div");
+  const info_span = document.createElement("span");
+  const postUser_span=document.createElement("span");
   
   if(post.imgUrls[0] != null){
     const img_a = document.createElement("a");
@@ -116,6 +134,7 @@ const createPostUI = (post) => {
     post_div.appendChild(img_a);
   }  
   post_body_a.href = `/community/${id}`;
+  title_div_a.href = `/community/${id}`;
 
   post_body_div.innerText = deleteTag(postBody) || "Nothing";
   post_body_div.style.overflow="hidden";
@@ -132,15 +151,25 @@ const createPostUI = (post) => {
   title_div.style.paddingTop="10px";
   title_div.style.paddingBottom="10px";
   title_div.style.fontWeight="bolder";
+  title_div.style.fontSize="large";
 
+  info_span.innerText = convertToDate(createdAt);
+  info_span.style.paddingTop="10%";
+  info_span.style.paddingLeft="5px";
+  info_span.style.fontSize="smaller"
+  info_span.style.color="saddlebrown"
+  info_span.style.display="inline-block"
+
+  //postUser_span.innerText =
 
   post_body_a.appendChild(post_body_div);
-  post_div.appendChild(title_div);
+  title_div_a.appendChild(title_div);
+  post_div.appendChild(title_div_a);
   post_div.appendChild(post_body_a);
-  
+  post_div.appendChild(info_span);
+
   post_div.className =
-    "float-on-hover shadow-inner w-full border border-gray-300 p-5 rounded-2xl";
-  
+    "float-on-hover shadow-inner w-full border border-gray-300 p-5 rounded-2xl";  
   postsContainer.appendChild(post_div);
   
    
