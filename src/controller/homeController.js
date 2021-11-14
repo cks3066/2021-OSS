@@ -18,6 +18,14 @@ export const auth = async (req, res) => {
   res.render("auth", { routes, pageTitle: "Auth | OOS" });
 };
 
+export const chatRooms = (req, res) => {
+  res.render("chatRooms", { routes, pageTitle: "ChatRooms | OOS" });
+};
+
+export const chatRoom = (req, res) => {
+  res.render("chatRoom", { routes, pageTitle: `ChatRoom | OOS` });
+};
+
 // //로그인을 시도하려 하면 동작하는 함수
 // export const login = async (req, res) => {
 //   const { email, password } = req.body;

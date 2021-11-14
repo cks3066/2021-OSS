@@ -11,6 +11,9 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -89,4 +92,33 @@ export const getDocument = async (collectionName, documentName) => {
   }
 
   return { ok: false, error: "getDocument went wrong", documentData: null };
+};
+
+export const queryDocument = async (
+  collectionName,
+  queryCondition,
+  queryOperation,
+  queryValue
+) => {
+  try {
+    const q = query(
+      collection(collectionName),
+      where(queryCondition, queryOperation, queryValue)
+    );
+    const queryResults = await getDocs(q);
+
+    for (const queryResult of queryResults.docs) {
+      if (queryResult.exists()) {
+        return { ok: true, documentData: queryResult.data() };
+      }
+    }
+
+    return {
+      ok: false,
+      error: `Failed to query FB ${collectionName} : ${queryCondition} : ${queryOperation} :  ${queryValue}`,
+    };
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error };
+  }
 };

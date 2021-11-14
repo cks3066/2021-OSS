@@ -1,4 +1,4 @@
-import { DB_COLLECTIONS } from "../../utils/constants";
+import { DB_COLLECTIONS, routes } from "../../utils/constants";
 import {
   query,
   where,
@@ -13,6 +13,7 @@ import {
   dbService,
   deleteDocument,
   getDocument,
+  queryDocument,
   storageService,
   updateDocument,
 } from "./firebase";
@@ -693,4 +694,190 @@ export const uploadImg = (file) => {
 
     reader.readAsDataURL(file);
   });
+};
+
+const checkRoomExists = async (me, you) => {
+  if (!me || !you) {
+    return { ok: false };
+  }
+
+  try {
+    if (!me.chatRoomIds || !you.chatRoomIds) {
+      return { ok: false };
+    }
+
+    const myChatRoomIds = me.chatRoomIds;
+    const yourChatRoomIds = you.chatRoomIds;
+
+    for (const myChatRoomId of myChatRoomIds) {
+      const room = yourChatRoomIds.find((roomId) => roomId === myChatRoomId);
+      if (room) {
+        return { ok: true, chatRoomId: myChatRoomId };
+      }
+    }
+
+    return { ok: false };
+  } catch (error) {
+    console.log(error);
+    return { ok: false };
+  }
+};
+
+// chatRoom API
+export const createChatRoom = async (participantId) => {
+  if (!isLoggedIn()) {
+    return { ok: false, error: "해당 기능은 로그인 후에 이용할 수 있습니다." };
+  }
+  if (!participantId || typeof participantId !== "string") {
+    return { ok: false, error: "인자에 오류가 있습니다." };
+  }
+
+  try {
+    const currentUser = await getUser();
+    const participantUser = await getUserByUid(participantId);
+
+    if (!currentUser || !participantUser) {
+      return {
+        ok: false,
+        error: "내 정보 혹은 상대 유저의 정보가 올바르지 않습니다.",
+      };
+    }
+
+    // 채팅방 개설 전에 이미 비슷한 채팅방이 있는지 확인한다.
+    // 비슷한 채팅방이 있으면 그곳으로 이동시켜주고, 아니면 새로 만들어 준다.
+    // 해당 api는 리턴 값으로  채팅방 url을 넘겨 줘야함.
+    const { ok, chatRoomId } = await checkRoomExists(
+      currentUser,
+      participantUser
+    );
+
+    if (ok && chatRoomId) {
+      alert("이미 존재하는 채팅방입니다.");
+      return { ok: true, chatRoomId };
+    } else {
+      const newChatRoom = {
+        id: null,
+        participantIds: [currentUser.uid, participantUser.uid],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+
+      // create new ChatRoom
+      const {
+        error,
+        id: newChatRoomId,
+        ok,
+      } = await createDocument(DB_COLLECTIONS.CHAT_ROOM, newChatRoom);
+
+      if (!ok || error) {
+        return { ok, error };
+      }
+
+      // updateChatRoomId
+      const { error: updateNewChatRoomErr, ok: updateNewChatRoomOk } =
+        await updateDocument(DB_COLLECTIONS.CHAT_ROOM, newChatRoomId, {
+          id: newChatRoomId,
+        });
+
+      if (!updateNewChatRoomOk || updateNewChatRoomErr) {
+        return { ok: updateNewChatRoomOk, error: updateNewChatRoomErr };
+      }
+
+      // update current User chatRoomIds
+      const currentUserChatRoomIds = currentUser.chatRoomIds || [];
+      const {
+        error: updateCurrentUserChatRoomIdsErr,
+        ok: updateCurrentUserChatRoomIdsOk,
+      } = await updateDocument(DB_COLLECTIONS.USER, currentUser.id, {
+        chatRoomIds: [...currentUserChatRoomIds, newChatRoomId],
+      });
+
+      if (!updateCurrentUserChatRoomIdsOk || updateCurrentUserChatRoomIdsErr) {
+        return {
+          ok: updateCurrentUserChatRoomIdsOk,
+          error: updateCurrentUserChatRoomIdsErr,
+        };
+      }
+
+      // update ParticipantUser ChatRoomIds
+      const participantUserChatRoomIds = participantUser.chatRoomIds || [];
+      const {
+        error: updateParticipantUserChatRoomIdsErr,
+        ok: updateParticipantUserChatRoomIdsOk,
+      } = await updateDocument(DB_COLLECTIONS.USER, participantUser.id, {
+        chatRoomIds: [...participantUserChatRoomIds, newChatRoomId],
+      });
+
+      if (
+        !updateParticipantUserChatRoomIdsOk ||
+        updateParticipantUserChatRoomIdsErr
+      ) {
+        return {
+          ok: updateParticipantUserChatRoomIdsOk,
+          error: updateParticipantUserChatRoomIdsErr,
+        };
+      }
+
+      // everything is clear, then return true with newChatRoomId
+      return { ok: true, chatRoomId: newChatRoomId };
+    }
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error };
+  }
+};
+
+export const getChatRooms = async () => {
+  if (!isLoggedIn()) {
+    return { ok: false, error: "해당 기능은 로그인 후에 이용할 수 있습니다." };
+  }
+
+  try {
+    const currentUser = await getUser();
+    const chatRoomIds = currentUser.chatRoomIds;
+    const container = [];
+
+    if (!chatRoomIds) {
+      return { ok: true, chatRooms: container };
+    }
+
+    for (const chatRoomId of chatRoomIds) {
+      const {
+        documentData: chatRoom,
+        error,
+        ok,
+      } = await getDocument(DB_COLLECTIONS.CHAT_ROOM, chatRoomId);
+
+      if (!ok || error) {
+        return { ok, error };
+      }
+      container.push(chatRoom);
+    }
+
+    return { ok: true, chatRooms: container };
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error };
+  }
+};
+
+export const getAllUsers = async () => {
+  if (!isLoggedIn()) {
+    return null;
+  }
+  let users = [];
+  try {
+    const userDocs = await getDocs(collection(dbService, DB_COLLECTIONS.USER));
+
+    for (const userData of userDocs.docs) {
+      if (userData.exists()) {
+        users.push(userData.data());
+      }
+    }
+
+    return users.filter((user) => user.uid !== authService.currentUser.uid);
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };

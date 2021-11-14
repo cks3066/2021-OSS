@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('./partials/head.ejs') %>
+  <body>
+    <%-include('./partials/header.ejs') %>
+    <main class="w-full max-w-2xl min-h-screen mx-auto">
+      <div
+        class="w-full p-5 mb-5 bg-green-500 text-5xl text-center font-semibold"
+      >
+        <span>💬</span>
+      </div>
+      <div id="chatRoomsContainer"></div>
+      <button
+        id="createChatRoomBtn"
+        class="
+          fixed
+          bottom-0
+          right-0
+          m-5
+          flex
+          items-center
+          px-5
+          py-3
+          bg-green-500
+          rounded-full
+          hover:scale-105
+          transition-all
+          transform
+        "
+      >
+        <i class="fas fa-plus-circle text-3xl text-white mr-3"></i>
+        <span class="text-white">채팅방 만들기</span>
+      </button>
+    </main>
+    <section
+      class="
+        fixed
+        hidden
+        top-0
+        left-0
+        w-full
+        h-full
+        justify-center
+        items-center
+        backdrop-filter backdrop-blur-sm
+      "
+      id="createChatRoomModal"
+    >
+      <div
+        id="createChatRoomModalBg"
+        class="
+          absolute
+          top-0
+          left-0
+          w-full
+          h-full
+          bg-transparent
+          cursor-pointer
+        "
+      ></div>
+      <div class="max-w-2xl w-full z-10 rounded-2xl pb-20">
+        <h1
+          class="
+            w-full
+            p-5
+            text-center
+            bg-gray-800
+            font-semibold
+            rounded-tl-2xl rounded-tr-2xl
+            text-white text-2xl
+          "
+        >
+          💬 채팅할 유저를 선택하세요
+        </h1>
+        <div
+          class="
+            w-full
+            h-full
+            overflow-auto
+            p-10
+            bg-gray-700
+            grid grid-cols-3
+            gap-5
+            rounded-bl-2xl rounded-br-2xl
+            shadow-2xl
+          "
+          style="grid-auto-rows: 25%; min-height: 70vh"
+          id="createChatRoomUserContainer"
+        ></div>
+      </div>
+    </section>
+    <script src="/assets/js/chatRooms.js"></script>
+  </body>
+</html>

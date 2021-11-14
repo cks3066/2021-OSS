@@ -6,6 +6,8 @@ module.exports = {
     communityPostDetail: "./src/client/js/communityPostDetail.js",
     community: "./src/client/js/community.js",
     createCommunityPost: "./src/client/js/createCommunityPost.js",
+    chatRooms: "./src/client/js/chatRooms.js",
+    chatRoom: "./src/client/js/chatRoom.js",
   },
   watch: true,
   mode: "development",
