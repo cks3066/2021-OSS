@@ -51,7 +51,7 @@ const handleClickToCreatePost = async (editorObj) => {
     alert("제목은 필수입니다.");
     return;
   }
-
+  
   // editorContainer를 찾는 이부분은 앞서 살펴 본 editorHTML에 값을 집어 넣기 위한 작업을 하는 부분입니다.
   // qlEditor라는 변수에는 .ql-editor 라는 Quilljs 라는 에디터 라이브러리에서 제공하는 에디터의 쓴 글들이 태그의 형태로 저장 되는 공간입니다.
   // 따라서 해당 공간을 찾아서 innerHTML의 값을 가져오면 유저가 에디터에서 작성한 글 혹은 이미지들을 가져와 DB에 저장할 수 있고, 이를 다시 꺼내어 특정 div에 innetHTML 속성 값으로 주게 되면 포스트가 정상적으로 보여지게 됩니다.
@@ -60,6 +60,7 @@ const handleClickToCreatePost = async (editorObj) => {
     editorHTML = qlEditor.innerHTML;
   }
 
+  
   //data는 createCommunityPost의 내부에 들어가는 인자로 저희 노션 문서에 자세히 적혀져 있습니다. 궁금하면 직접 함수를 찾아 보셔도 됩니다.
   const data = {
     title: postTitle.value,

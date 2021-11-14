@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 import "./menuBar";
 import { updateMenuBar } from "./menuBar";
 import { getCommunityPosts } from "./utils";
+import { getUserByUid } from "./utils";
 
 const postsContainer = document.getElementById("postsContainer");
 const buttonForSort = document.getElementsByClassName("button");
@@ -100,7 +101,9 @@ function convertToDate(createdAt) {
 const createPostUI = (post) => {
   const { id,title,postBody,createdAt, createrId } = post;
   
-  
+  const createrInfo = getUserByUid(createrId);
+  const createrName= createrInfo.displayName;
+
   const post_div=document.createElement("div");
   const post_body_div=document.createElement("div");
   const post_body_a = document.createElement("a");
@@ -160,13 +163,18 @@ const createPostUI = (post) => {
   info_span.style.color="saddlebrown"
   info_span.style.display="inline-block"
 
-  //postUser_span.innerText =
+  postUser_span.innerText = "By "+ createrName|| "anonym";
+  postUser_span.style.fontSize="smaller"
+  postUser_span.style.color="saddlebrown"
+  postUser_span.style.display="inline-block"
+  postUser_span.style.marginLeft="50%"
 
   post_body_a.appendChild(post_body_div);
   title_div_a.appendChild(title_div);
   post_div.appendChild(title_div_a);
   post_div.appendChild(post_body_a);
   post_div.appendChild(info_span);
+  post_div.appendChild(postUser_span);
 
   post_div.className =
     "float-on-hover shadow-inner w-full border border-gray-300 p-5 rounded-2xl";  
