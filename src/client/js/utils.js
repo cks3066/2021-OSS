@@ -76,7 +76,7 @@ export const isPostMine = (user, postId) => {
 };
 
 //여러 communityPost들을 db로부터 불러 오는 함수
-export const getCommunityPosts = async () => {
+export const getCommunityPosts = async (type) => {
   try {
     const container = [];
     const result = await getDocs(
@@ -88,7 +88,9 @@ export const getCommunityPosts = async () => {
         container.push(item.data());
       }
     }
-    return container.sort((a, b) => b.createdAt - a.createdAt);
+
+    if (type==1) return container.sort((a, b) => b.createdAt - a.createdAt);
+    else if (type==2) return container.sort((a, b) => b.views - a.views);
   } catch (error) {
     console.log(error);
     return [];

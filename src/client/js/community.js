@@ -5,15 +5,68 @@ import { updateMenuBar } from "./menuBar";
 import { getCommunityPosts } from "./utils";
 
 const postsContainer = document.getElementById("postsContainer");
+const viewedButton= document.getElementById("viewed");
+const recentButton= document.getElementById("recent");
+//viewedButton.addEventListener("click",handleClickToViewedButton);
+
+const handleClickToViewedButton = async () => {  
+    /*alert('1');
+    
+    document.body.hidden = true;
+    await loadPosts();
+    setTimeout(init, 1000);
+    document.body.hidden=false;
+    displayPostUI();
+  */
+    //location.reload();
+    //postsContainer.removeChild();
+    deleteChild(postsContainer);    
+    await loadPosts(2);
+    setTimeout(displayPostUI(posts), 1000);
+    //displayPostUI();
+};
+
+const handleClickToRecentButton = async() => {
+  deleteChild(postsContainer);
+  await loadPosts(1);
+  setTimeout(displayPostUI(posts), 1000);
+}
+
+
+
+function deleteChild(mydiv) {
+  var child = mydiv.lastElementChild; 
+  while (child) {
+      mydiv.removeChild(child);
+      child = mydiv.lastElementChild;
+  }
+}
+
+/*
+function myclick() {  
+  alert('1');
+  document.body.hidden = true;
+  await loadPosts();
+  setTimeout(init, 1000);
+  document.body.hidden=false;
+  displayPostUI();
+
+};*/
+
 let posts = null;
 
-const loadPosts = async () => {
+const loadPosts = async (type) => {
   try {
-    posts = await getCommunityPosts();
+    posts = await getCommunityPosts(type);
   } catch (error) {
     console.log(error);
   }
 };
+
+const initTest = async () => {
+  displayPostUI(posts);
+};
+
 
 const displayPostUI = (posts) => {
   for (const post of posts) {
@@ -21,12 +74,6 @@ const displayPostUI = (posts) => {
   }
 };
 
-const hasImg = (post) => {
-  if(post.immgUrls[0] == null)
-    return true;
-  else 
-    return false;
-};
 
 const deleteTag = (postBody) =>{
   const extract = /(<([^>]+)>)/ig;
@@ -37,10 +84,12 @@ const deleteTag = (postBody) =>{
 const createPostUI = (post) => {
   const { id,title,postBody } = post;
   
+  
   const post_div=document.createElement("div");
   const post_body_div=document.createElement("div");
   const post_body_a = document.createElement("a");
   const title_div = document.createElement("div");
+  const info_div = document.createElement("div");
   
   if(post.imgUrls[0] != null){
     const img_a = document.createElement("a");
@@ -48,7 +97,7 @@ const createPostUI = (post) => {
     const Img = document.createElement("img");
     
     img_wrapper_div.style.position ="relative";
-    img_wrapper_div.style.paddingTop="60%";
+    img_wrapper_div.style.height="50%";
     img_wrapper_div.style.overflow="hidden";
   
     img_a.href = `/community/${id}`;
@@ -61,11 +110,10 @@ const createPostUI = (post) => {
     Img.style.bottom="0";
     Img.style.maxWidth="100%";
     Img.style.height="auto";
-  //Img.style.objectFit="cover";
-
-  img_wrapper_div.appendChild(Img);
-  img_a.appendChild(img_wrapper_div);
-  post_div.appendChild(img_a);
+    
+    img_wrapper_div.appendChild(Img);
+    img_a.appendChild(img_wrapper_div);
+    post_div.appendChild(img_a);
   }  
   post_body_a.href = `/community/${id}`;
 
@@ -73,20 +121,25 @@ const createPostUI = (post) => {
   post_body_div.style.overflow="hidden";
   post_body_div.style.textOverflow="ellipsis";
   post_body_div.style.display="-webkit-box";
-  post_body_div.style.webkitLineClamp="5";
+  post_body_div.style.webkitLineClamp="4";
   post_body_div.style.webkitBoxOrient="vertical";
   post_body_div.style.wordBreak="break-all";
-  post_body_div.style.minHeight="30%";
+  post_body_div.style.height="25%";
 
   title_div.innerText = title || "untitled";
-  
-  
+
+  title_div.style.height="10%";
+  title_div.style.paddingTop="10px";
+  title_div.style.paddingBottom="10px";
+  title_div.style.fontWeight="bolder";
+
+
   post_body_a.appendChild(post_body_div);
   post_div.appendChild(title_div);
   post_div.appendChild(post_body_a);
   
   post_div.className =
-    "w-full border border-gray-500 p-5 hover:bg-gray-500 transition-all rounded-2xl";
+    "float-on-hover shadow-inner w-full border border-gray-300 p-5 rounded-2xl";
   
   postsContainer.appendChild(post_div);
   
@@ -98,11 +151,20 @@ const init = async () => {
   displayPostUI(posts);
   console.log(posts);
   updateMenuBar();
+
+  if (viewedButton) {
+    viewedButton.addEventListener("click", handleClickToViewedButton);
+  }
+
+  if (recentButton) {
+    recentButton.addEventListener("click", handleClickToRecentButton);
+  }
+
 };
 
 const preload = async () => {
   document.body.hidden = true;
-  await loadPosts();
+  await loadPosts(1);
   setTimeout(init, 1000);
 };
 
