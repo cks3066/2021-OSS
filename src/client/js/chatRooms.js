@@ -39,7 +39,7 @@ const createUserBanner = (user) => {
   title.innerText = user.email;
 
   div.className =
-    "flex justify-center items-center w-full h-full bg-green-500 text-white rounded-2xl hover:scale-105 transition-all transform cursor-pointer";
+    "flex justify-center items-center w-full h-full ring-4 ring-green-700 bg-green-500 text-white rounded-2xl hover:scale-105 transition-all transform cursor-pointer";
 
   title.className = "font-semibold w-2/3  break-words";
 
@@ -51,29 +51,34 @@ const createUserBanner = (user) => {
 
 const createChatRoomBanner = (chatRoom) => {
   const div = document.createElement("div");
+  const link = document.createElement("a");
   const title = document.createElement("span");
   const msgIndicateDiv = document.createElement("div");
   const msgIcon = document.createElement("i");
   const msgSpan = document.createElement("span");
 
-  div.className =
-    "flex justify-between items-center w-full p-5 my-5 bg-green-400 rounded-2xl";
+  link.href = routes.chatRoom(chatRoom.id);
+
+  link.className =
+    "flex justify-between items-center w-full p-5 my-5 bg-green-500 ring ring-green-600 rounded-2xl hover:scale-105 transform transition-all";
 
   title.innerText = chatRoom.id;
 
-  title.className = "text-2xl";
+  title.className = "text-2xl font-medium text-white";
 
   msgIndicateDiv.className = "flex items-center";
 
-  msgIcon.className = "fas fa-comment-alt text-2xl mr-3";
+  msgIcon.className = "fas fa-comment-alt text-2xl mr-3 text-white";
 
   msgSpan.className = "text-xl";
 
   msgIndicateDiv.appendChild(msgIcon);
   msgIndicateDiv.appendChild(msgSpan);
 
-  div.appendChild(title);
-  div.appendChild(msgIndicateDiv);
+  link.appendChild(title);
+  link.appendChild(msgIndicateDiv);
+
+  div.appendChild(link);
 
   chatRoomsContainer.appendChild(div);
 };
@@ -133,9 +138,9 @@ const init = async () => {
   document.body.hidden = false;
 };
 
-const preload = async () => {
-  document.body.hidden = true;
+const preload = () => {
   setTimeout(init, 1000);
 };
 
+document.body.hidden = true;
 document.addEventListener("DOMContentLoaded", preload);

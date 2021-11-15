@@ -3,13 +3,32 @@
   <%-include('./partials/head.ejs') %>
   <body>
     <%-include('./partials/header.ejs') %>
-    <main class="w-full max-w-2xl min-h-screen mx-auto">
+    <main
+      class="
+        w-full
+        max-w-2xl
+        min-h-screen
+        mx-auto
+        border-2 border-gray-300
+        my-5
+        rounded-2xl
+        bg-gray-200
+      "
+    >
       <div
-        class="w-full p-5 mb-5 bg-green-500 text-5xl text-center font-semibold"
+        class="
+          w-full
+          p-5
+          mb-5
+          rounded-tl-2xl rounded-tr-2xl
+          bg-gray-300
+          text-5xl text-center
+          font-semibold
+        "
       >
         <span>💬</span>
       </div>
-      <div id="chatRoomsContainer"></div>
+      <div class="px-5" id="chatRoomsContainer"></div>
       <button
         id="createChatRoomBtn"
         class="
@@ -58,7 +77,7 @@
           cursor-pointer
         "
       ></div>
-      <div class="max-w-2xl w-full z-10 rounded-2xl pb-20">
+      <div class="max-w-2xl w-full z-10 rounded-2xl ring ring-gray-500">
         <h1
           class="
             w-full

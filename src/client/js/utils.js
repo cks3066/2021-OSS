@@ -881,3 +881,30 @@ export const getAllUsers = async () => {
     return [];
   }
 };
+
+export const getChatRoom = async (chatRoomId) => {
+  if (!chatRoomId || typeof chatRoomId !== "string") {
+    return { ok: false, error: "인자가 올바르지 않습니다." };
+  }
+  if (!isLoggedIn()) {
+    return { ok: false, error: "해당 기능은 로그인 후에 이용할 수 있습니다." };
+  }
+
+  try {
+    const {
+      documentData: chatRoomData,
+      error,
+      ok,
+    } = await getDocument(DB_COLLECTIONS.CHAT_ROOM, chatRoomId);
+
+    if (!ok || error) {
+      return { ok, error };
+    }
+
+    console.log(chatRoomData);
+    return chatRoomData;
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error };
+  }
+};

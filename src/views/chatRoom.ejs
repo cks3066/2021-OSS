@@ -4,9 +4,48 @@
   <body>
     <%-include('./partials/header.ejs') %>
     <main
-      class="w-full max-w-xl min-h-screen mx-auto pb-20 border border-black"
+      class="w-full max-w-xl min-h-screen mx-auto bg-gray-200 my-5 rounded-2xl"
     >
-      <h1 class="text-center">Hello chatRoom</h1>
+      <div
+        class="
+          w-full
+          p-5
+          flex
+          items-center
+          bg-gray-300
+          rounded-tl-2xl rounded-tr-2xl
+        "
+      >
+        <section class="w-full flex items-center justify-between">
+          <i
+            class="
+              fas
+              fa-arrow-alt-circle-left
+              mr-5
+              text-4xl text-gray-500
+              hover:text-gray-800
+              transition-all
+              cursor-pointer
+            "
+          ></i>
+          <div class="flex items-center">
+            <span id="userName" class="text-2xl font-semibold mr-3"
+              >user name</span
+            >
+            <i
+              id="userNoAvatarIcon"
+              class="fas fa-user-circle text-4xl text-gray-800"
+            ></i>
+          </div>
+        </section>
+      </div>
+      <!-- chatContainer -->
+      <div id="chatContainer" class="w-full p-5 flex flex-col items-center">
+        <div class="self-start">saddad</div>
+        <div class="self-end">saddad</div>
+        <div class="self-start">saddad</div>
+        <div class="self-end">saddad</div>
+      </div>
     </main>
     <script src="/assets/js/chatRoom.js"></script>
   </body>
