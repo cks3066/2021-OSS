@@ -102,7 +102,7 @@ export const queryDocument = async (
 ) => {
   try {
     const q = query(
-      collection(collectionName),
+      collection(dbService, collectionName),
       where(queryCondition, queryOperation, queryValue)
     );
     const queryResults = await getDocs(q);

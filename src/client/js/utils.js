@@ -1,4 +1,4 @@
-import { DB_COLLECTIONS, routes } from "../../utils/constants";
+import { DB_COLLECTIONS } from "../../utils/constants";
 import {
   query,
   where,
@@ -901,10 +901,99 @@ export const getChatRoom = async (chatRoomId) => {
       return { ok, error };
     }
 
-    console.log(chatRoomData);
-    return chatRoomData;
+    return { ok: true, chatRoomData };
   } catch (error) {
     console.log(error);
+    return { ok: false, error };
+  }
+};
+
+export const createChatMsg = async (chatRoomId, fromId, toId, msgBody) => {
+  try {
+    if (!isLoggedIn()) {
+      throw new Error("로그인 이후 이용 가능합니다.");
+    }
+    if (!chatRoomId || !fromId || !toId || !msgBody || msgBody.length <= 0) {
+      throw new Error("인자가 이상합니다.");
+    }
+
+    const chatRoomMsg = {
+      id: null,
+      fromId,
+      toId,
+      text: msgBody,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      chatRoomId,
+    };
+    const {
+      error,
+      id: chatRoomMsgId,
+      ok,
+    } = await createDocument(DB_COLLECTIONS.CHAT_ROOM_MSG, chatRoomMsg);
+
+    if (!ok || error) {
+      throw new Error(error);
+    }
+
+    const { error: updateMsgErr, ok: updateMsgOk } = await updateDocument(
+      DB_COLLECTIONS.CHAT_ROOM_MSG,
+      chatRoomMsgId,
+      {
+        id: chatRoomMsgId,
+      }
+    );
+
+    if (!updateMsgOk || updateMsgErr) {
+      throw new Error(updateMsgErr);
+    }
+
+    const {
+      ok: chatRoomOK,
+      chatRoomData,
+      error: chatRoomErr,
+    } = await getChatRoom(chatRoomId);
+
+    if (!chatRoomOK || chatRoomErr) {
+      throw new Error(chatRoomErr);
+    }
+
+    const chatRoomMsgs = chatRoomData.msgs || [];
+    const { error: updateChatRoomErr, ok: updateChatRoomOk } =
+      await updateDocument(DB_COLLECTIONS.CHAT_ROOM, chatRoomId, {
+        msgs: [...chatRoomMsgs, chatRoomMsgId],
+      });
+
+    if (!updateChatRoomOk || updateChatRoomErr) {
+      throw new Error(updateChatRoomErr);
+    }
+
+    return { ok: true, chatRoomMsgId };
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error };
+  }
+};
+
+export const getChatRoomMsg = async (chatRoomMsgId) => {
+  try {
+    const {
+      ok,
+      documentData: chatRoomMsg,
+      error,
+    } = await queryDocument(
+      DB_COLLECTIONS.CHAT_ROOM_MSG,
+      "id",
+      "==",
+      chatRoomMsgId
+    );
+
+    if (!ok || error) {
+      throw new Error(error);
+    }
+
+    return { ok: true, chatRoomMsg };
+  } catch (error) {
     return { ok: false, error };
   }
 };

@@ -18,4 +18,5 @@ export const DB_COLLECTIONS = {
   COMMUNITY_POST: "communityPost",
   COMMUNITY_COMMENT: "communityComment",
   CHAT_ROOM: "chatRoom",
+  CHAT_ROOM_MSG: "chatRoomMsg",
 };

@@ -3,9 +3,7 @@
   <%-include('./partials/head.ejs') %>
   <body>
     <%-include('./partials/header.ejs') %>
-    <main
-      class="w-full max-w-xl min-h-screen mx-auto bg-gray-200 my-5 rounded-2xl"
-    >
+    <main class="w-full max-w-xl mx-auto bg-gray-200 my-5 rounded-2xl">
       <div
         class="
           w-full
@@ -28,10 +26,8 @@
               cursor-pointer
             "
           ></i>
-          <div class="flex items-center">
-            <span id="userName" class="text-2xl font-semibold mr-3"
-              >user name</span
-            >
+          <div id="userInfoContainer" class="flex items-center">
+            <span id="userName" class="text-xl font-bold mr-3">user name</span>
             <i
               id="userNoAvatarIcon"
               class="fas fa-user-circle text-4xl text-gray-800"
@@ -40,11 +36,33 @@
         </section>
       </div>
       <!-- chatContainer -->
-      <div id="chatContainer" class="w-full p-5 flex flex-col items-center">
-        <div class="self-start">saddad</div>
-        <div class="self-end">saddad</div>
-        <div class="self-start">saddad</div>
-        <div class="self-end">saddad</div>
+      <div
+        id="chatContainer"
+        style="min-height: 50vh"
+        class="w-full p-5 flex flex-col items-center"
+      ></div>
+      <div class="w-full h-16 grid" style="grid-template-columns: 6fr 1fr">
+        <input
+          id="chatEditor"
+          class="
+            w-full
+            h-full
+            px-5
+            text-lg
+            font-medium
+            outline-none
+            bg-gray-100
+            rounded-bl-2xl
+          "
+          type="text"
+          placeholder="메세지를 입력해 주세요..."
+        />
+        <button
+          id="chatSendButton"
+          class="w-full h-full text-2xl bg-green-500 rounded-br-2xl"
+        >
+          🔥
+        </button>
       </div>
     </main>
     <script src="/assets/js/chatRoom.js"></script>
