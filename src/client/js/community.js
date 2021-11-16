@@ -93,10 +93,7 @@ function convertToDate(createdAt) {
 }
 
 const createPostUI = (post) => {
-  const { id, title, postBody, createdAt, createrId } = post;
-
-  const createrInfo = getUserByUid(createrId);
-  const createrName = createrInfo.displayName;
+  const { id, title, postBody, createdAt } = post;
 
   const post_div = document.createElement("div");
   const post_body_div = document.createElement("div");
@@ -111,7 +108,7 @@ const createPostUI = (post) => {
     const img_wrapper_div = document.createElement("div");
     const Img = document.createElement("img");
 
-    img_wrapper_div.style.position = "relative";
+    /*img_wrapper_div.style.position = "relative";
     img_wrapper_div.style.height = "50%";
     img_wrapper_div.style.overflow = "hidden";
 
@@ -125,10 +122,23 @@ const createPostUI = (post) => {
     Img.style.bottom = "0";
     Img.style.maxWidth = "100%";
     Img.style.height = "auto";
+    */
+    img_a.href = `/community/${id}`;
+    Img.src = post.imgUrls[0];
 
+    img_wrapper_div.style.width="100%";
+    img_wrapper_div.style.height="50%";
+    img_wrapper_div.style.overflow="hidden";
+    img_wrapper_div.style.margin="0 auto";
+
+    Img.style.width="100%";
+    Img.style.height="100%";
+    Img.style.objectFit="cover";
+    img_wrapper_div.href=`/community/${id}`;
     img_wrapper_div.appendChild(Img);
-    img_a.appendChild(img_wrapper_div);
-    post_div.appendChild(img_a);
+    //img_a.appendChild(img_wrapper_div);
+    //post_div.appendChild(img_a);
+    post_div.appendChild(img_wrapper_div);
   }
   post_body_a.href = `/community/${id}`;
   title_div_a.href = `/community/${id}`;
@@ -151,13 +161,17 @@ const createPostUI = (post) => {
   title_div.style.fontSize = "large";
 
   info_span.innerText = convertToDate(createdAt);
-  info_span.style.paddingTop = "10%";
+  info_span.style.paddingTop = "8%";
   info_span.style.paddingLeft = "5px";
   info_span.style.fontSize = "smaller";
   info_span.style.color = "saddlebrown";
   info_span.style.display = "inline-block";
 
-  postUser_span.innerText = "By " + createrName || "anonym";
+  const promise = getUserByUid(post.creatorId);
+  promise.then(function (result) {
+    var rlt=result.email.split('@');
+    postUser_span.innerText = `By ${result.displayName || rlt[0]}`;
+  });
   postUser_span.style.fontSize = "smaller";
   postUser_span.style.color = "saddlebrown";
   postUser_span.style.display = "inline-block";
@@ -170,9 +184,14 @@ const createPostUI = (post) => {
   post_div.appendChild(info_span);
   post_div.appendChild(postUser_span);
 
+  
   post_div.className =
     "float-on-hover shadow-inner w-full border border-gray-300 p-5 rounded-2xl";
+  post_div.style.cursor="pointer";
+  post_div.onclick= function() {window.location.href=`/community/${id}`;};
   postsContainer.appendChild(post_div);
+  
+  
 };
 
 const init = async () => {
