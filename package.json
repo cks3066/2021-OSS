@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "start:dev": "nodemon",
     "build": "npm run build:server && npm run build:assets",
-    "build:assets": "webpack --mode=production --config webpack.config.js",
+    "build:assets": "webpack --mode=development --config webpack.config.js",
     "build:server": "babel src -d build",
     "tailwind:build": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/tailwind_style.css",
     "dev:assets": "webpack --mode=development -w --config webpack.config.js"
