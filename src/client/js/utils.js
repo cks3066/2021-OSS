@@ -24,7 +24,9 @@ import {
   uploadString,
 } from "firebase/storage";
 import { v4 as uuid } from "uuid";
+
 import { updatePassword, updateProfile } from "@firebase/auth";
+
 
 //현재 로그인 한 유저정보를 불러오는 함수.
 export const getUser = async () => {

@@ -11,6 +11,7 @@ export const routes = {
     postId ? `/community/${postId}` : `/community/:postId`,
   chatRoom: (chatRoomId) =>
     chatRoomId ? `/chatRoom/${chatRoomId}` : `/chatRoom/:chatRoomId`,
+  profile: (uid) => (uid ? `/profile/${uid}` : `/profile/:uid`),
 };
 
 export const DB_COLLECTIONS = {

@@ -5,6 +5,8 @@ import {
   createCommunityPost,
 } from "../controller/communityController";
 import { auth, chatRoom, chatRooms, home } from "../controller/homeController";
+import { auth, home } from "../controller/homeController";
+import { profile } from "../controller/profileController";
 import { routes } from "../utils/constants";
 
 export const mainRouter = express.Router();
@@ -24,3 +26,5 @@ mainRouter.get(routes.communityPostDetail(), communityPostDetail);
 mainRouter.get(routes.chatRooms, chatRooms);
 // chatRoom
 mainRouter.get(routes.chatRoom(), chatRoom);
+//profile
+mainRouter.get(routes.profile(), profile);
