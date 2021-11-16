@@ -4,9 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon",
+    "start": "node build/index.js",
+    "start:dev": "nodemon",
+    "build": "npm run build:server && npm run build:assets",
+    "build:assets": "webpack --mode=production --config webpack.config.js",
+    "build:server": "babel src -d build",
     "tailwind:build": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/tailwind_style.css",
-    "assets": "webpack --config webpack.config.js"
+    "dev:assets": "webpack --mode=development -w --config webpack.config.js"
   },
   "dependencies": {
     "@babel/cli": "^7.15.7",

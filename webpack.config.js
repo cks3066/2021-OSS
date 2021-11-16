@@ -10,8 +10,6 @@ module.exports = {
     chatRoom: "./src/client/js/chatRoom.js",
     profile: "./src/client/js/profile.js",
   },
-  watch: true,
-  mode: "development",
   output: {
     clean: true,
     filename: "[name].js",

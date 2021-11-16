@@ -4,7 +4,7 @@ import { routes } from "../utils/constants";
 export const community = (req, res) => {
   res.render("community", {
     routes,
-    pageTitle: "Community | OOS",
+    pageTitle: "Community | KwangGround",
   });
 };
 
@@ -12,13 +12,13 @@ export const community = (req, res) => {
 export const communityPostDetail = (req, res) => {
   return res.render("communityPostDetail", {
     routes,
-    pageTitle: "PostDetail | OOS",
+    pageTitle: "PostDetail | KwangGround",
   });
 };
 
 export const createCommunityPost = (req, res) => {
   return res.render("createCommunityPost", {
     routes,
-    pageTitle: "createCommunityPost | OOS",
+    pageTitle: "createCommunityPost | KwangGround",
   });
 };

@@ -16,7 +16,6 @@ import {
   deleteComment,
 } from "./utils";
 import { authService, updateDocument } from "./firebase";
-import { async } from "@firebase/util";
 
 const newPostButton = document.getElementById("newPostButton");
 const deleteButton = document.getElementById("deleteButton");
@@ -170,7 +169,7 @@ const commentOnDisplay = async (comment, onFront) => {
     commentDiv.appendChild(commentUsername);
     commentDiv.appendChild(commentContent);
 
-    if (comment.creatorId === authService.currentUser.uid) {
+    if (comment.creatorId === authService.currentUser?.uid) {
       const deleteButton = document.createElement("button");
       deleteButton.innerText = "삭제";
       deleteButton.className =
@@ -228,9 +227,11 @@ const init = async () => {
     postUserID.innerHTML = result.email;
   });
 
-  const isMine = isPostMine(user, post.id);
-  if (isMine) {
-    postButtonContainer.style.display = "flex";
+  if (user) {
+    const isMine = isPostMine(user, post.id);
+    if (isMine) {
+      postButtonContainer.style.display = "flex";
+    }
   }
 
   try {
