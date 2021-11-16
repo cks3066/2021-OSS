@@ -1,9 +1,16 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { routes } from "../../utils/constants";
+import { authService } from "./firebase";
 import "./menuBar";
 import { updateMenuBar } from "./menuBar";
-import { createChatRoom, getAllUsers, getChatRooms, isLoggedIn } from "./utils";
+import {
+  createChatRoom,
+  getAllUsers,
+  getChatRooms,
+  getUserByUid,
+  isLoggedIn,
+} from "./utils";
 
 const chatRoomsContainer = document.getElementById("chatRoomsContainer");
 const createChatRoomBtn = document.getElementById("createChatRoomBtn");
@@ -49,7 +56,7 @@ const createUserBanner = (user) => {
   createChatRoomUserContainer.appendChild(div);
 };
 
-const createChatRoomBanner = (chatRoom) => {
+const createChatRoomBanner = async (chatRoom) => {
   const div = document.createElement("div");
   const link = document.createElement("a");
   const title = document.createElement("span");
@@ -57,20 +64,31 @@ const createChatRoomBanner = (chatRoom) => {
   const msgIcon = document.createElement("i");
   const msgSpan = document.createElement("span");
 
+  const youUid = chatRoom.participantIds.filter(
+    (id) => id !== authService.currentUser.uid
+  )[0];
+
+  if (youUid) {
+    const you = await getUserByUid(youUid);
+    if (you) {
+      title.innerText = `${you.displayName || you.email}님과의 대화`;
+    }
+  }
+
   link.href = routes.chatRoom(chatRoom.id);
 
   link.className =
-    "flex justify-between items-center w-full p-5 my-5 bg-green-500 ring ring-green-600 rounded-2xl hover:scale-105 transform transition-all";
+    "flex justify-between items-center w-full p-5 my-5 bg-gray-200 ring ring-green-600 rounded-2xl hover:bg-green-500 transition-all hover:text-white";
 
-  title.innerText = chatRoom.id;
-
-  title.className = "text-2xl font-medium text-white";
+  title.className = "text-xl font-medium";
 
   msgIndicateDiv.className = "flex items-center";
 
-  msgIcon.className = "fas fa-comment-alt text-2xl mr-3 text-white";
+  msgIcon.className = "fas fa-comment-alt text-2xl mr-3";
 
-  msgSpan.className = "text-xl";
+  msgSpan.className = "text-lg font-medium";
+
+  msgSpan.innerText = chatRoom.msgs.length;
 
   msgIndicateDiv.appendChild(msgIcon);
   msgIndicateDiv.appendChild(msgSpan);

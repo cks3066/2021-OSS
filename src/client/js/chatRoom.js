@@ -13,14 +13,14 @@ import {
   isLoggedIn,
 } from "./utils";
 
+const backButton = document.getElementById("backButton");
 const userName = document.getElementById("userName");
 const userNoAvatarIcon = document.getElementById("userNoAvatarIcon");
 const userInfoContainer = document.getElementById("userInfoContainer");
 const chatContainer = document.getElementById("chatContainer");
 const chatEditor = document.getElementById("chatEditor");
-const chatSendButton = document.getElementById("chatSendButton");
+const chatEditorForm = document.getElementById("chatEditorForm");
 let chatRoomId = "";
-let chatRoom = null;
 let me = null;
 let you = null;
 let msgs = [];
@@ -73,7 +73,8 @@ const loadChatRoom = async () => {
   }
 };
 
-const handleClickToSendChat = async () => {
+const handleClickToSendChat = async (e) => {
+  e.preventDefault();
   const chatMsg = chatEditor.value;
   if (chatMsg.length > 0) {
     const { ok, error } = await createChatMsg(
@@ -101,24 +102,52 @@ const createNewMsgOnDisplay = async (docMsgs) => {
 
       if (ok) {
         const container = document.createElement("div");
-        const body = document.createElement("span");
+        const body = document.createElement("h1");
+        let avatar = null;
+
         body.innerText = chatRoomMsg.text;
         container.className =
-          "p-5 px-10 mt-5 font-medium text-xl flex justify-center items-center rounded-2xl";
+          "mt-5 font-medium flex justify-center items-center rounded-2xl";
+        body.className = "p-5 rounded-2xl";
         if (chatRoomMsg.fromId === authService.currentUser.uid) {
-          container.classList.add("self-end", "bg-green-500", "text-white");
+          container.classList.add("self-end", "text-white");
+          body.classList.add("bg-green-500");
         } else {
-          container.classList.add("self-start", "bg-gray-500");
+          container.classList.add("self-start");
+          body.classList.add("bg-gray-300");
+          if (you?.photoURL) {
+            avatar = createUserProfileAvatar(you.photoURL);
+            avatar.classList.add("mr-3");
+          } else {
+            avatar = document.createElement("i");
+            avatar.className = "fas fa-user-circle text-4xl text-gray-800 mr-3";
+          }
+        }
+
+        if (avatar) {
+          container.appendChild(avatar);
         }
 
         container.appendChild(body);
         chatContainer.appendChild(container);
+        window.scrollTo(0, document.body.clientHeight);
       } else {
         console.log(error);
       }
     }
   }
   msgs = [...docMsgs];
+};
+
+const createUserProfileAvatar = (photoURL) => {
+  const avatar = document.createElement("a");
+
+  userNoAvatarIcon.style.display = "none";
+  avatar.style.backgroundImage = `url(${photoURL})`;
+  avatar.className =
+    "w-10 h-10 rounded-full bg-center bg-cover ring-2 ring-gray-800";
+
+  return avatar;
 };
 
 const init = async () => {
@@ -141,35 +170,36 @@ const init = async () => {
 
     if (userName) {
       userName.innerText = `${you.displayName || you.email}님과의 대화`;
+
       if (you.photoURL && userNoAvatarIcon && userInfoContainer) {
-        const avatar = document.createElement("a");
-
-        userNoAvatarIcon.style.display = "none";
-        avatar.style.backgroundImage = `url(${you.photoURL})`;
-        avatar.className =
-          "w-10 h-10 rounded-full bg-center bg-cover ring-2 ring-gray-800";
-
+        const avatar = createUserProfileAvatar(you.photoURL);
         userInfoContainer.appendChild(avatar);
       }
-
-      if (chatSendButton) {
-        chatSendButton.addEventListener("click", handleClickToSendChat);
-      }
-
-      onSnapshot(
-        doc(dbService, `${DB_COLLECTIONS.CHAT_ROOM}/${chatRoomId}`),
-        (doc) => {
-          console.log("This is from onsnapshot");
-          console.log(doc.data());
-          if (doc.exists()) {
-            const docMsgs = doc.get("msgs");
-            createNewMsgOnDisplay(docMsgs);
-          }
-        }
-      );
-
-      document.body.hidden = false;
     }
+
+    if (chatEditorForm) {
+      chatEditorForm.addEventListener("submit", handleClickToSendChat);
+    }
+
+    onSnapshot(
+      doc(dbService, `${DB_COLLECTIONS.CHAT_ROOM}/${chatRoomId}`),
+      async (doc) => {
+        console.log("This is from onsnapshot");
+        console.log(doc.data());
+        if (doc.exists()) {
+          const docMsgs = doc.get("msgs");
+          await createNewMsgOnDisplay(docMsgs);
+        }
+      }
+    );
+
+    if (backButton) {
+      backButton.addEventListener("click", () => {
+        window.location.href = routes.chatRooms;
+      });
+    }
+
+    document.body.hidden = false;
   } catch (error) {
     console.log(error);
     alert(error);

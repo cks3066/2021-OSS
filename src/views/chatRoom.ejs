@@ -16,6 +16,7 @@
       >
         <section class="w-full flex items-center justify-between">
           <i
+            id="backButton"
             class="
               fas
               fa-arrow-alt-circle-left
@@ -41,7 +42,12 @@
         style="min-height: 50vh"
         class="w-full p-5 flex flex-col items-center"
       ></div>
-      <div class="w-full h-16 grid" style="grid-template-columns: 6fr 1fr">
+      <form
+        autocomplete="off"
+        id="chatEditorForm"
+        class="w-full h-16 grid"
+        style="grid-template-columns: 6fr 1fr"
+      >
         <input
           id="chatEditor"
           class="
@@ -63,7 +69,7 @@
         >
           🔥
         </button>
-      </div>
+      </form>
     </main>
     <script src="/assets/js/chatRoom.js"></script>
   </body>
