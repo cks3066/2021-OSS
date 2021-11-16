@@ -1,0 +1,152 @@
+@media screen and (max-width: 768px) {
+  #container {
+    width: 100%;
+  }
+  #buttonContainer {
+    width: 100%;
+  }
+}
+
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  padding: 2.5rem;
+  --tw-bg-opacity: 1;
+  min-height: 80vh;
+  width: 768px;
+  text-align: start;
+  padding-top: 0px;
+}
+
+#postTitle {
+  margin: 1rem;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: start;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+#postInfo {
+  margin: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#postUserID {
+  color: #bebebe;
+}
+
+#postDate {
+  margin-left: 20px;
+  color: #bebebe;
+}
+#postBody {
+  padding: 1rem;
+  min-height: 40vh;
+}
+
+#newPostButton {
+  width: 100px;
+  height: 30px;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+#buttonContainer {
+  display: flex;
+  padding-left: 80%;
+  width: 768px;
+}
+
+#postButtonContainer {
+  display: none;
+  margin: 0px;
+  margin-top: 5px;
+  padding-left: 88%;
+  width: 768px;
+}
+
+#updateButton {
+  margin: 5px;
+  color: gray;
+}
+
+#updateButton:hover {
+  cursor: pointer;
+}
+
+#deleteButton {
+  margin: 5px;
+  color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
+#deleteButton:hover {
+  cursor: pointer;
+}
+
+#commentContainer {
+  padding: 0px 1rem;
+  width: 100%;
+  height: 15vh;
+}
+
+#commentCnt {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#commentInput {
+  border: 1px solid #bebebe;
+  width: 100%;
+  resize: none;
+  padding: 10px;
+  font-size: 14px;
+  margin: 5px 0px;
+}
+
+#commentInput:focus {
+  outline: none;
+}
+
+#commentButtonContainer {
+  width: 100%;
+  padding-left: 84%;
+}
+
+#commentButton {
+  border-radius: 5px;
+  padding: 5px 20px;
+  background-color: #00b894;
+  color: white;
+  font-weight: bold;
+}
+
+#commentButton:hover {
+  background-color: #218c74;
+}
+
+#commentList {
+  padding-bottom: 25px;
+  margin-top: 20px;
+}
+
+.comment {
+  margin: 10px 0px;
+}
+
+.commentId {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.commentContent {
+  font-weight: 300;
+}
