@@ -27,7 +27,6 @@ import { v4 as uuid } from "uuid";
 
 import { updatePassword, updateProfile } from "@firebase/auth";
 
-
 //현재 로그인 한 유저정보를 불러오는 함수.
 export const getUser = async () => {
   let user = null;
@@ -99,8 +98,8 @@ export const getCommunityPosts = async (type) => {
       }
     }
 
-    if (type==1) return container.sort((a, b) => b.createdAt - a.createdAt);
-    else if (type==2) return container.sort((a, b) => b.views - a.views);
+    if (type == 1) return container.sort((a, b) => b.createdAt - a.createdAt);
+    else if (type == 2) return container.sort((a, b) => b.views - a.views);
   } catch (error) {
     console.log(error);
     return [];
@@ -624,7 +623,7 @@ export const updateComment = async (postId, commentId, data) => {
 
 export const getComments = async (commentIds) => {
   const comments = [];
-  if (!Array.isArray(commentIds) || commentIds.length <= 0) {
+  if (!Array.isArray(commentIds)) {
     return { ok: false, error: "인자로 들어온 값이 잘못 되었습니다." };
   }
 

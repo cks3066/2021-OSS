@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <%-include('./partials/head.ejs') %>
+  <style>
+    .ql-container {
+      font-size: 15px;
+    }
+  </style>
   <body>
     <%-include('./partials/header.ejs') %>
     <main
@@ -10,13 +15,14 @@
         min-h-screen
         pb-20
         mx-auto
-        flex        
+        flex
         items-center
         flex-col
       "
     >
       <input
-        id="postTitle"type="text"
+        id="postTitle"
+        type="text"
         placeholder="제목을 입력하세요"
         class="
           outline-none
@@ -28,16 +34,17 @@
         "
       />
       <div id="editor-container" class="min-w-full">
-        <div class="editor"></div>
+        <div class="editor" style="min-height: 50vh"></div>
         <div
           class="
             border-l border-b border-r border-gray-300
             flex
             justify-end
-            items-center            
+            items-center
           "
         >
-          <button id="homeCancelPostButton"
+          <button
+            id="homeCancelPostButton"
             class="
               p-3
               px-10
@@ -45,7 +52,6 @@
               text-white
               hover:opacity-60
               transition-all
-              
             "
           >
             취소
