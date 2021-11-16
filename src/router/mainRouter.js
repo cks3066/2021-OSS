@@ -5,7 +5,6 @@ import {
   createCommunityPost,
 } from "../controller/communityController";
 import { auth, chatRoom, chatRooms, home } from "../controller/homeController";
-import { auth, home } from "../controller/homeController";
 import { profile } from "../controller/profileController";
 import { routes } from "../utils/constants";
 

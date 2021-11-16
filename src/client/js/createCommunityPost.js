@@ -45,6 +45,7 @@ const handleClickToCreatePost = async (editorObj) => {
     editorHTML = qlEditor.innerHTML;
   }
 
+  //data는 createCommunityPost의 내부에 들어가는 인자로 저희 노션 문서에 자세히 적혀져 있습니다. 궁금하면 직접 함수를 찾아 보셔도 됩니다.
   const data = {
     title: postTitle.value,
     postBody: editorHTML,
