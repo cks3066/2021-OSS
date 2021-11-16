@@ -26,8 +26,10 @@ const formPasswordInput = document.getElementById("formPasswordInput");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 
 const handleClickToChangeMode = () => {
+  console.log("changeMode!");
   switch (authForm.action) {
     case `http://${window.location.host}/signIn`:
+      console.log("change mode to login");
       authForm.action = `http://${window.location.host}/login`;
       authFormSpan.innerText = "로그인";
       authFormTitle.innerText = "로그인";
@@ -35,6 +37,7 @@ const handleClickToChangeMode = () => {
       googleLoginBtn.style.display = "block";
       break;
     case `http://${window.location.host}/login`:
+      console.log("change mode to register");
       authForm.action = `http://${window.location.host}/signIn`;
       authFormSpan.innerText = "회원가입";
       authFormTitle.innerText = "회원가입";
@@ -109,7 +112,7 @@ const handleSubmitToAuth = async (e) => {
         );
         break;
     }
-    console.log(credential.user);
+    console.log(credential);
     if (credential?.user) {
       window.location.href = routes.home;
     }
@@ -178,7 +181,6 @@ const handleClickToLoginWithGoogle = async () => {
 };
 
 const init = () => {
-  document.body.hidden = false;
   if (isLoggedIn()) {
     alert("이미 로그인 하셨습니다.");
     window.location.href = routes.home;
@@ -195,6 +197,7 @@ const init = () => {
   if (googleLoginBtn) {
     googleLoginBtn.addEventListener("click", handleClickToLoginWithGoogle);
   }
+  document.body.hidden = false;
 };
 
 const preload = () => {
