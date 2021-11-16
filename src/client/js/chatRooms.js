@@ -43,7 +43,7 @@ const createUserBanner = (user) => {
   const div = document.createElement("div");
   const title = document.createElement("h1");
 
-  title.innerText = user.email;
+  title.innerText = user.displayName || user.email;
 
   div.className =
     "flex justify-center items-center w-full h-full ring-4 ring-green-700 bg-green-500 text-white rounded-2xl hover:scale-105 transition-all transform cursor-pointer";
