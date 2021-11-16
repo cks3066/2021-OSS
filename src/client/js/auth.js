@@ -1,5 +1,5 @@
 import "core-js/stable";
-import "regenerator-runtime/runtime";
+import "regenerator-runtime";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -13,7 +13,7 @@ import {
   updateDocument,
 } from "./firebase";
 import { DB_COLLECTIONS, routes } from "../../utils/constants";
-import { asyncCurrentUserToFirebase, isLoggedIn } from "./utils";
+import { isLoggedIn } from "./utils";
 import { collection, getDocs, query, where } from "@firebase/firestore";
 
 const btnChangeMode = document.getElementById("btn-modeChange");
