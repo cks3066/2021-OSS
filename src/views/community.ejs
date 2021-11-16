@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <%-include('./partials/head.ejs') %>
-  <body>
+  <body hidden="true">
     <%-include('./partials/header.ejs') %>
-    <link rel="stylesheet" href="/src/styles/communityButton.css">
+    <link rel="stylesheet" href="/src/styles/communityButton.css" />
     <main class="w-full min-h-screen flex justify-center items-center pb-20">
-      <div
-        class="
-          p-10
-          bg-gray-50
-          w-full
-          mx-auto
-          rounded-2xl
-          shadow-inner          
-        "
-      >
-        <button class="btn" id="recent" >최신순</button>
+      <div class="p-10 bg-gray-50 w-full mx-auto rounded-2xl shadow-inner">
+        <button class="btn" id="recent">최신순</button>
         <button class="btn" id="viewed">조회순</button>
-        <div id="postsContainer" class="grid" style="
-        grid-auto-rows:minmax(350px,450px);
-        grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
-        
-        row-gap:2vh;
-        column-gap:2vw;
-        padding-top: 2vh;
-        "></div>
+        <div
+          id="postsContainer"
+          class="grid"
+          style="
+            grid-auto-rows: minmax(350px, 450px);
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+            row-gap: 2vh;
+            column-gap: 2vw;
+            padding-top: 2vh;
+          "
+        ></div>
       </div>
     </main>
-    <script src="/assets/js/community.js"></script>    
+    <script src="/assets/js/community.js"></script>
   </body>
 </html>

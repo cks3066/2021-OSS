@@ -160,5 +160,4 @@ const preload = () => {
   setTimeout(init, 1000);
 };
 
-document.body.hidden = true;
 document.addEventListener("DOMContentLoaded", preload);

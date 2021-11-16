@@ -246,7 +246,6 @@ const init = async () => {
 };
 
 const preload = async () => {
-  document.body.hidden = true;
   post = await loadCommunityPost();
   user = await getUser();
   await increaseView();

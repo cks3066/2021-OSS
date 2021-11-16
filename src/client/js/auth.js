@@ -201,8 +201,6 @@ const init = () => {
 };
 
 const preload = () => {
-  document.body.hidden = true;
-
   setTimeout(init, 1000);
 };
 

@@ -71,8 +71,6 @@ const init = async () => {
     window.location.href = routes.auth;
   }
   try {
-    document.body.hidden = false;
-
     updateMenuBar();
 
     const editorObj = createEditor(".editor");
@@ -81,10 +79,11 @@ const init = async () => {
   } catch (error) {
     console.log(error);
   }
+
+  document.body.hidden = false;
 };
 
 const preload = () => {
-  document.body.hidden = true;
   setTimeout(init, 1000);
 };
 
