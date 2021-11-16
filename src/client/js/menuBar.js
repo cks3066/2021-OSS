@@ -20,6 +20,7 @@ export const updateMenuBar = async () => {
 
     menuBarLogout.onclick = handleClickToLogOut;
     menuBarProfileButton.innerText = user.email;
+    menuBarProfileButton.href = routes.profile(user.uid);
   } else {
     menuBarLogout.hidden = true;
     menuBarSignIn.hidden = false;

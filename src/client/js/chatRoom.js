@@ -103,7 +103,6 @@ const createNewMsgOnDisplay = async (docMsgs) => {
       if (ok) {
         const container = document.createElement("div");
         const body = document.createElement("h1");
-        let avatar = null;
 
         body.innerText = chatRoomMsg.text;
         container.className =
@@ -116,16 +115,18 @@ const createNewMsgOnDisplay = async (docMsgs) => {
           container.classList.add("self-start");
           body.classList.add("bg-gray-300");
           if (you?.photoURL) {
-            avatar = createUserProfileAvatar(you.photoURL);
+            const avatar = createUserProfileAvatar(you);
             avatar.classList.add("mr-3");
+            container.appendChild(avatar);
           } else {
-            avatar = document.createElement("i");
-            avatar.className = "fas fa-user-circle text-4xl text-gray-800 mr-3";
+            const link = document.createElement("a");
+            link.href = routes.profile(you.uid);
+            const avatarNoImgIcon = document.createElement("i");
+            avatarNoImgIcon.className =
+              "fas fa-user-circle text-4xl text-gray-800 mr-3";
+            link.appendChild(avatarNoImgIcon);
+            container.appendChild(link);
           }
-        }
-
-        if (avatar) {
-          container.appendChild(avatar);
         }
 
         container.appendChild(body);
@@ -139,11 +140,12 @@ const createNewMsgOnDisplay = async (docMsgs) => {
   msgs = [...docMsgs];
 };
 
-const createUserProfileAvatar = (photoURL) => {
+const createUserProfileAvatar = (user) => {
   const avatar = document.createElement("a");
 
   userNoAvatarIcon.style.display = "none";
-  avatar.style.backgroundImage = `url(${photoURL})`;
+  avatar.href = routes.profile(user.uid);
+  avatar.style.backgroundImage = `url(${user.photoURL})`;
   avatar.className =
     "w-10 h-10 rounded-full bg-center bg-cover ring-2 ring-gray-800";
 
@@ -172,8 +174,10 @@ const init = async () => {
       userName.innerText = `${you.displayName || you.email}님과의 대화`;
 
       if (you.photoURL && userNoAvatarIcon && userInfoContainer) {
-        const avatar = createUserProfileAvatar(you.photoURL);
+        const avatar = createUserProfileAvatar(you);
         userInfoContainer.appendChild(avatar);
+      } else {
+        userNoAvatarIcon.herf = routes.profile(you.uid);
       }
     }
 
