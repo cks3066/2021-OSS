@@ -21,6 +21,7 @@ const chatContainer = document.getElementById("chatContainer");
 const chatEditor = document.getElementById("chatEditor");
 const chatEditorForm = document.getElementById("chatEditorForm");
 let chatRoomId = "";
+let chatRoom = null;
 let me = null;
 let you = null;
 let msgs = [];
@@ -65,6 +66,7 @@ const loadChatRoom = async () => {
     const { chatRoomData } = await getChatRoom(chatRoomId);
 
     if (chatRoomData) {
+      chatRoom = chatRoomData;
       await parseMeandYou(chatRoomData);
     }
   } catch (error) {
@@ -168,6 +170,16 @@ const init = async () => {
       alert("채팅방 유저 정보가 잘못 되었습니다.");
       console.log(me, you);
       return;
+    }
+
+    if (chatRoom) {
+      const isChatRoomMine = chatRoom.participantIds.find(
+        (id) => id === me.uid
+      );
+      if (!isChatRoomMine) {
+        alert("해당 채팅방 접근 권한이 없습니다.");
+        window.location.href = routes.home;
+      }
     }
 
     if (userName) {
