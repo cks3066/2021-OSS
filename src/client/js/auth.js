@@ -28,17 +28,17 @@ const googleLoginBtn = document.getElementById("googleLoginBtn");
 const handleClickToChangeMode = () => {
   console.log("changeMode!");
   switch (authForm.action) {
-    case `http://${window.location.host}/signIn`:
+    case `https://${window.location.host}/signIn`:
       console.log("change mode to login");
-      authForm.action = `http://${window.location.host}/login`;
+      authForm.action = `https://${window.location.host}/login`;
       authFormSpan.innerText = "로그인";
       authFormTitle.innerText = "로그인";
       btnChangeMode.innerText = "회원가입하기";
       googleLoginBtn.style.display = "block";
       break;
-    case `http://${window.location.host}/login`:
+    case `https://${window.location.host}/login`:
       console.log("change mode to register");
-      authForm.action = `http://${window.location.host}/signIn`;
+      authForm.action = `https://${window.location.host}/signIn`;
       authFormSpan.innerText = "회원가입";
       authFormTitle.innerText = "회원가입";
       btnChangeMode.innerText = "로그인하기";
@@ -66,7 +66,7 @@ const handleSubmitToAuth = async (e) => {
 
   try {
     switch (authForm.action) {
-      case `http://${window.location.host}/signIn`:
+      case `https://${window.location.host}/signIn`:
         // 회원가입을 하고 싶은 경우
         credential = await createUserWithEmailAndPassword(
           authService,
@@ -103,7 +103,7 @@ const handleSubmitToAuth = async (e) => {
           window.location.href = routes.home;
         }
         break;
-      case `http://${window.location.host}/login`:
+      case `https://${window.location.host}/login`:
         // 로그인을 하고 싶은 경우
         credential = await signInWithEmailAndPassword(
           authService,
