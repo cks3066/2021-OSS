@@ -16,6 +16,6 @@ app.use(urlencoded({ extended: false }));
 
 app.use(routes.home, mainRouter);
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log(`🧨Server running on http://localhost:3001`);
 });
