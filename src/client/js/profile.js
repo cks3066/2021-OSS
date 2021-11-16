@@ -3,30 +3,26 @@ import "regenerator-runtime/runtime";
 import "./menuBar";
 import { updateMenuBar } from "./menuBar";
 import { routes } from "../../utils/constants";
-import { createEditor } from "./editor";
 import {
-  deleteImgFromFirebase,
-  getUser,
   getUserByUid,
   isLoggedIn,
   updateUser,
   uploadImg,
 } from "./utils";
 import { authService } from "./firebase";
-import { async } from 'regenerator-runtime';
-import { assert } from '@firebase/util';
-
 
 const hrefParsed = window.location.href.split("/");
 const profileId = hrefParsed[hrefParsed.length - 1];
 
-const updateButton = document.getElementById("updateButton");
 const container = document.getElementById("container");
+let updateButton;
 
 const userName = document.getElementById("userName");
 const userEmail = document.getElementById("userEmail");
 
 const img = document.getElementById("profileImage");
+
+const Button = "<button id = 'updateButton' class = 'w-36 h-full ml-auto text-center border border-black rounded-full hover:bg-black hover:text-white transition ease-linear'>프로필 수정</button>"
 
 //프로필 수정버튼 클릭시 생성될 인터페이스
 
@@ -50,20 +46,18 @@ const updateDisplay =
 + "</div>";
 
 const updateDisplayName = async () => {
-  const user = await getUser();
   let newName = null;
   const displayName = document.getElementById('displayName');
 
   if(displayName != null){
     newName = displayName.value;
-    updateUser(user.uid, { displayName: newName, });
+    updateUser(profileId, { displayName: newName, });
+    alert('닉네임이 변경되었습니다.');
   }
 }
 
 //비밀번호 업데이트
 const updatePasswd = async () => {
-  const user = await getUser();
-
   const passwdFirst = document.getElementById('passwdFirst');
   const passwdSecond = document.getElementById('passwdSecond');
 
@@ -78,7 +72,7 @@ const updatePasswd = async () => {
   if(newPasswd1 === '' && newPasswd2 === '') { return; }
 
   else if(newPasswd1 === newPasswd2){
-    const { ok, error } = await updateUser(user.uid, 
+    const { ok, error } = await updateUser(profileId, 
       { password: newPasswd2, });
 
     if(!ok || error){
@@ -99,8 +93,6 @@ const updatePasswd = async () => {
 }
 
 const updateImage = async () => {
-  const user = await getUser();
-
   const uploader = document.getElementById("profileUploader");
 
   console.log(uploader);
@@ -114,7 +106,7 @@ const updateImage = async () => {
           if(img && img.tagName === "IMG") {
             img.src = url;
             console.log(url);
-            updateUser(user.uid, { photoURL: url, });
+            updateUser(profileId, { photoURL: url, });
           }
         }
       }
@@ -133,19 +125,17 @@ const changeInfoDisplay = async () => {
     updateButton.innerHTML = '수정 완료';
     container.insertAdjacentHTML('beforeend', updateDisplay);
   }
-  else{
+  else if(updateButton.innerText === '수정 완료'){
     updateDisplayName();
     updatePasswd();
-    alert('닉네임이 변경되었습니다.');
+    preload(); 
   }
 }
 
 const clickUpdateButton = async () => {
-  try {
-    const user = await getUser();
-    
+  try {    
     //uid 판별을 위한 호출
-    const { error, ok } = await updateUser(user.uid , {});
+    const { error, ok } = await updateUser(profileId, {});
     
     if (ok) {
       changeInfoDisplay();
@@ -173,19 +163,39 @@ const showUserInfo = async () => {
   userEmail.innerText = 'User Email : ' + profileUser.email;
 }
 
+const checkProfileUser = async () => {
+  if(isLoggedIn()){
+    const { error, ok } = await updateUser(profileId, {});
+    const buttonContainer = document.getElementById('updateInfo');
+
+    if (ok) {
+      buttonContainer.innerHTML = Button;
+      updateButton = document.getElementById("updateButton");
+      
+      if (updateButton) {
+        updateButton.addEventListener("click", clickUpdateButton);
+      }
+    }
+  }
+}
+
 const init = async () => {
   document.body.hidden = false;
   updateMenuBar();
   
-  if (updateButton) {
-    updateButton.addEventListener("click", clickUpdateButton);
-  }
+  checkProfileUser();
 
   showUserInfo();
 };
 
 const preload = () => {
   document.body.hidden = true;
+  const removeTag = document.getElementById('update');
+
+  //프로필 수정 인터페이스 제거
+  if(removeTag){
+    container.removeChild(removeTag);
+  }
   setTimeout(init, 1000);
 };
 
