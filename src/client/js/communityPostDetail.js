@@ -28,6 +28,7 @@ const postButtonContainer = document.getElementById("postButtonContainer");
 const commentInput = document.getElementById("commentInput");
 const commentList = document.getElementById("commentList");
 const commentCnt = document.getElementById("commentCnt");
+const postDate = document.getElementById("postDate");
 
 let post = null;
 let user = null;
@@ -220,6 +221,10 @@ const init = async () => {
   }
   if (commentCnt) {
     commentCnt.innerText = `${post.commentIds.length}개의 댓글`;
+  }
+  if(postDate){
+    const d = new Date(post.createdAt);
+    postDate.innerText = d.toLocaleDateString().slice(0,-1) +' '+ d.toLocaleTimeString().slice(0,7);
   }
 
   const promise = getUserByUid(post.creatorId);
