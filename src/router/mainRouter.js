@@ -1,11 +1,14 @@
 import express from "express";
 import {
+  home,
+  auth,
+  chatRoom,
+  chatRooms,
   community,
   communityPostDetail,
   createCommunityPost,
-} from "../controller/communityController";
-import { auth, chatRoom, chatRooms, home } from "../controller/homeController";
-import { profile } from "../controller/profileController";
+  profile,
+} from "../controller/mainController";
 import { routes } from "../utils/constants";
 
 export const mainRouter = express.Router();
@@ -14,7 +17,6 @@ export const mainRouter = express.Router();
 mainRouter.get(routes.home, home);
 //auth
 mainRouter.get(routes.auth, auth);
-
 //community
 mainRouter.get(routes.community, community);
 //createCommunityPost

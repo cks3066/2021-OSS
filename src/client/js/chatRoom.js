@@ -110,12 +110,14 @@ const createNewMsgOnDisplay = async (docMsgs) => {
         container.className =
           "mt-5 font-medium flex justify-center items-center rounded-2xl";
         body.className = "p-5 rounded-2xl";
+
         if (chatRoomMsg.fromId === authService.currentUser.uid) {
           container.classList.add("self-end", "text-white");
           body.classList.add("bg-green-500");
         } else {
           container.classList.add("self-start");
           body.classList.add("bg-gray-300");
+
           if (you?.photoURL) {
             const avatar = createUserProfileAvatar(you);
             avatar.classList.add("mr-3");
