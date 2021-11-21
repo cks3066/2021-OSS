@@ -107,8 +107,10 @@ const createNewMsgOnDisplay = async (docMsgs) => {
         const body = document.createElement("h1");
 
         body.innerText = chatRoomMsg.text;
+
         container.className =
           "mt-5 font-medium flex justify-center items-center rounded-2xl";
+
         body.className = "p-5 rounded-2xl";
 
         if (chatRoomMsg.fromId === authService.currentUser.uid) {
@@ -171,6 +173,8 @@ const init = async () => {
     if (!me || !you) {
       alert("채팅방 유저 정보가 잘못 되었습니다.");
       console.log(me, you);
+      window.location.href = routes.home;
+
       return;
     }
 

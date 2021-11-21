@@ -88,7 +88,7 @@ const createChatRoomBanner = async (chatRoom) => {
 
   msgSpan.className = "text-lg font-medium";
 
-  msgSpan.innerText = chatRoom.msgs.length;
+  msgSpan.innerText = chatRoom?.msgs?.length || 0;
 
   msgIndicateDiv.appendChild(msgIcon);
   msgIndicateDiv.appendChild(msgSpan);
